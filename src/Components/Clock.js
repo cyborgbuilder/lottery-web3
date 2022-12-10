@@ -26,29 +26,30 @@ const Clock = ({countdownTimestampMs}) => {
     return(
         <Container>
             <Slot>
-            <span>{remainingTime.days} </span>
+            <h1>{remainingTime.days} </h1>
             <p>Dys</p>
             </Slot>
             <Slot>
-                <p>:</p>
+                <h2>:</h2>
             </Slot>
             <Slot>
-            <span className="two-numbers">{remainingTime.hours} </span>
+            <h1 className="two-numbers">{remainingTime.hours} </h1>
             <p>Hrs</p>
             </Slot>
             <Slot>
-                <p>:</p>
+                <h2>:</h2>
             </Slot>
             <Slot>
-            <span className="two-numbers">{remainingTime.minutes} </span>
+            <h1 className="two-numbers">{remainingTime.minutes} </h1>
             <p>Min</p>
             </Slot>
 
             <Slot>
-                <p>:</p>
+                <h2>:</h2>
             </Slot>
+
             <Slot>
-            <span className="two-numbers">{remainingTime.seconds} </span>
+            <h1 className="two-numbers">{remainingTime.seconds}</h1> 
             <p>Sec</p>
             </Slot>
         </Container>
@@ -59,23 +60,33 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
 
     
 
 `
 
 const Slot = styled.div`
-    margin: 20px;
+    width: 100px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+
+    @media only screen and (max-width: 1200px){
+        width: 100px;
+
+    }
+
+
 
     @media only screen and (max-width: 1200px){
         margin: 10px;
     }
     span{
-        font-size: 60px;
+
         margin: 10px 0;
         align-items: center;
         justify-content: center;
@@ -84,14 +95,30 @@ const Slot = styled.div`
             font-size: 33px;
         }
     }
-    p{
-        font-size: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    h2{
+        font-size: 50px;
 
         @media only screen and (max-width: 1200px){
             font-size: 20px;
+        }
+    }
+    h1{
+        font-size: 100px; 
+
+        @media only screen and (max-width: 1200px){
+            font-size: 37px;
+        }
+    }
+    p{
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Overpass Mono', monospace;
+
+        @media only screen and (max-width: 1200px){
+            font-size: 18px;
         }
     }
     .two-numbers{

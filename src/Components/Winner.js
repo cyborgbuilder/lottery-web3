@@ -29,13 +29,15 @@ const Box = styled.div`
 
     @media only screen and (max-width: 1200px){
       background: #f3efef;
+      margin: 0 10px;
   }
     h2{
-        font-size: 22px;
+        font-size: 18px;
         letter-spacing: 0.1rem;
-
+        font-family: 'Overpass Mono', monospace;
+        font-weight: normal;
         @media only screen and (max-width: 1200px){
-          font-size: 16px;
+          font-size: 14px;
           background: #eaeaea;
       }
         
