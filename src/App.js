@@ -34,6 +34,11 @@ function App() {
       stateValue: "-",
       balance: "-"
     });
+
+    const [openError, setOpenError] = useState({
+      errorDet: ""
+    });
+
   async function connectWallet(){
       try{
           let web3modal = new Web3Modal({
@@ -45,6 +50,7 @@ function App() {
           if(web3modalProvider){
               setWeb3Provider(web3modalProvider)
           }
+          
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
   
@@ -73,15 +79,24 @@ function App() {
         });
       }catch(error){
           console.log(error)
+          setOpenError({
+            errorDet: "Can't connect wallet."
+          })
       }
   }
 
   const handleTransfer = async (e) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    try{
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
     const lottery = new ethers.Contract("0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef", Lottery, signer);
     await lottery.enter();
+    } catch(error){
+      setOpenError({
+        errorDet: "Error Occurred!"
+      })
+    }
   };
   return (
     <Container>
@@ -100,6 +115,8 @@ function App() {
       )}
 
       
+
+      
     </Navi>
      <Clock 
      countdownTimestampMs={1670924221000}/>
@@ -108,6 +125,7 @@ function App() {
         <h1>Lottery is <Gr>{contractInfo.stateValue}</Gr></h1>
         <h1>Pot Size <Or>{contractInfo.balance}</Or></h1>
         <button className='btn' onClick={handleTransfer}>PLAY</button>
+        <p style={{color: "red"}}>{openError.errorDet}</p>
     </PlayContainer>
 
     <WinnerContainer>
