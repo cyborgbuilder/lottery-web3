@@ -86,12 +86,20 @@ function App() {
   }
 
   const handleTransfer = async (e) => {
+
     try{
       const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
     const lottery = new ethers.Contract("0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef", Lottery, signer);
-    await lottery.enter();
+    const fee = lottery.getEntranceFee();
+    const balance = await provider.getBalance(signer);
+    if(balance>fee){
+      await lottery.enter();
+    }else{
+      setOpenError("Insufficient Balance!")
+    }
+ 
     } catch(error){
       setOpenError({
         errorDet: "Error Occurred!"
