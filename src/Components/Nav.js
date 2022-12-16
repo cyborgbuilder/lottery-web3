@@ -71,7 +71,6 @@ function Nav() {
         </Connect>
       )}
 
-      <h1>{contractInfo.lastWinner}</h1>
       
     </Container>
   )

@@ -42,8 +42,7 @@ function App() {
   async function connectWallet(){
       try{
           let web3modal = new Web3Modal({
-              cacheProvider: false,
-              providerOptions
+              cacheProvider: false
           });
           const web3modalInstance = await web3modal.connect();
           const web3modalProvider = new ethers.providers.Web3Provider(web3modalInstance);
@@ -52,31 +51,31 @@ function App() {
           }
           
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+       const provider = new ethers.providers.Web3Provider(window.ethereum);
   
-      const lottery = new ethers.Contract("0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef", Lottery, provider);
+       const lottery = new ethers.Contract("0xc7766Bd2112b8617EC7942c06d67274716D13C54", Lottery, provider);
   
-      const owner = await lottery.owner();
-      const lastWinner = await lottery.s_recentWinner();
-      const EntranceFee = await lottery.getEntranceFee();
-      const stateLottery = await lottery.s_lotteryState();
-      const balance = await provider.getBalance("0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef");
-      var stateValue = "";
-      if(stateLottery == 1){
-        stateValue = "CLOSED"
-      }else{
-        stateValue = "OPEN"
-      }
+       const owner = await lottery.owner();
+       const lastWinner = await lottery.s_recentWinner();
+       const EntranceFee = await lottery.s_entranceFeeInUsd();
+       const stateLottery = await lottery.s_lotteryState();
+       const balance = await provider.getBalance("0xc7766Bd2112b8617EC7942c06d67274716D13C54");
+        var stateValue = "";
+        if(stateLottery == 1){
+          stateValue = "CLOSED"
+        }else{
+          stateValue = "OPEN"
+        }
 
-      setContractInfo({
-          address: "0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef",
-          owner,
-          EntranceFee,
-          lastWinner,
-          stateValue,
-          balance: String(balance)
+        setContractInfo({
+            address: "0x03946138c096475E0c2682d7250c89bf881F48c4",
+            owner,
+            EntranceFee,
+            lastWinner,
+            stateValue,
+            balance: String(balance)
 
-        });
+       });
       }catch(error){
           console.log(error)
           setOpenError({
@@ -91,7 +90,7 @@ function App() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
-    const lottery = new ethers.Contract("0x25369B7Bfe52e9df54c5A2Cb57F1fd1b717E93Ef", Lottery, signer);
+    const lottery = new ethers.Contract("0x03946138c096475E0c2682d7250c89bf881F48c4", Lottery, signer);
     const fee = lottery.getEntranceFee();
     const balance = await provider.getBalance(signer);
     if(balance>fee){
